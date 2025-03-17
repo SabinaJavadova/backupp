@@ -1,0 +1,49 @@
+.user-chat {
+    padding: 1rem;
+    border-radius: 8px;
+    background-color: #2e0854; /* Tünd bənövşəyi fon */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    color: #c0c0c0; /* Gümüşü rəng */
+  
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+  
+    h3 {
+      font-size: 1.5rem;
+      color: #ffd700; /* Qızılı rəng */
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 5px rgba(255, 215, 0, 0.8); /* Qızılı parıltı */
+    }
+  
+    p {
+      font-size: 1rem;
+      color: #87ceeb; /* Açıq göy rəng */
+      margin-bottom: 1rem;
+      text-shadow: 0 0 3px rgba(135, 206, 235, 0.8); /* Açıq göy parıltı */
+    }
+  
+    .text-content {
+      background-color: #4b0082; /* Bənövşəyi rəng */
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  
+      .name {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #ffd700; /* Qızılı rəng */
+        margin-bottom: 0.5rem;
+        text-shadow: 0 0 5px rgba(255, 215, 0, 0.8); /* Qızılı parıltı */
+      }
+  
+      .text {
+        font-size: 1rem;
+        color: #87ceeb; /* Açıq göy rəng */
+        text-shadow: 0 0 3px rgba(135, 206, 235, 0.8); /* Açıq göy parıltı */
+      }
+    }
+  }
