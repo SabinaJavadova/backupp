@@ -31,7 +31,7 @@ export const ChatContextProvider = ({ children, user }) => {
           let isChatCreated = false;
           if (user.id === u.id) return false;
           if (userChats) {
-            isChatCreated = userChats.some((chat) => chat.members.includes(u.id));
+            isChatCreated = userChats.some((chat) => chat.members[0] === u._id || chat.members[1] === u._id);
           }
           return !isChatCreated;
         });

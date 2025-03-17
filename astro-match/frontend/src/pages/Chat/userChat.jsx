@@ -3,7 +3,11 @@ import { useFetchRecipientUser } from "../../../src/hooks/useFetchRecipient";
 import "./UserChat.scss"; // SCSS faylını import edin
 
 const UserChat = ({ chat, user }) => {
+
   const { recipientUser, error } = useFetchRecipientUser(chat, user);
+
+  console.log("recip",chat);
+  
 
   if (error) {
     return <div>Error fetching recipient user: {error.message}</div>;

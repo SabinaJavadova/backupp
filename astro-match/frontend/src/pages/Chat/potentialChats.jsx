@@ -19,7 +19,7 @@ const PotentialChats = () => {
     <div className="all-users">
       {potentialChats &&
         potentialChats.map((u, index) => (
-          <div className="single-user" key={index} onClick={() => handleCreateChat(u.id)}>
+          <div className="single-user" key={index} onClick={() =>  createChat(user.id, u._id)}>
             {u.name}
             <span className="user-online"></span>
           </div>

@@ -6,7 +6,7 @@ export const useFetchRecipientUser = (chat, user) => {
     const [error, setError] = useState(null);
   
     // recipientId-ni tapın
-    const recipientId = chat?.members?.find((id) => id && id !== user?._id); // id-nin null olmadığını yoxlayın
+    const recipientId = chat?.members?.find((id) => id && id !== user?.id); // id-nin null olmadığını yoxlayın
   
     console.log("User Object:", user);
     console.log("User ID:", user?.id);
@@ -18,7 +18,7 @@ export const useFetchRecipientUser = (chat, user) => {
         if (!recipientId) return;
   
         try {
-          const response = await axios.get(`http://localhost:3001/api/${recipientId}`);
+          const response = await axios.get(`http://localhost:3001/api/users/${recipientId}`);
           console.log("Fetched recipient user:", response.data);
   
           if (response.data) {
