@@ -1,12 +1,10 @@
-// frontend/src/pages/Dashboard/Dashboard.jsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Dashboard.scss";
 
 const Dashboard = () => {
-  const [user, setUser] = useState(null);
-  const [matches, setMatches] = useState([]);
+  const [users, setUsers] = useState([]); // Bütün istifadəçiləri saxlayan state
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,58 +14,59 @@ const Dashboard = () => {
       return;
     }
 
-    const fetchUserData = async () => {
+    const fetchUsers = async () => {
       try {
-        const response = await axios.get("http://localhost:3001/api/user/matches", {
+        const response = await axios.get("http://localhost:3001/api/users", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        console.log("Gələn cavab:", response.data); // Gələn cavabı konsolda yoxla
+        console.log("Gələn cavab:", response.data);
 
-        if (response.data.user) {
-          setUser(response.data.user);
-          setMatches(response.data.matches || []);
+        if (response.data) {
+          setUsers(response.data); // Bütün istifadəçiləri state-ə əlavə et
         } else {
           console.error("İstifadəçi məlumatları tapılmadı!");
-          navigate("/login");
         }
       } catch (err) {
         console.error("User data fetch error:", err);
       }
     };
 
-    fetchUserData();
+    fetchUsers();
   }, [navigate]);
 
-  const handleSendMessage = (matchId) => {
-    navigate(`/chat/${matchId}`);
+  const handleDeleteUser = async (userId) => {
+    try {
+      const token = localStorage.getItem("token");
+      await axios.delete(`http://localhost:3001/api/users/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      // Silinən istifadəçini siyahıdan çıxar
+      setUsers(users.filter((user) => user._id !== userId));
+      alert("İstifadəçi uğurla silindi!");
+    } catch (err) {
+      console.error("İstifadəçi silinərkən xəta baş verdi:", err);
+      alert("İstifadəçi silinərkən xəta baş verdi!");
+    }
   };
 
   return (
     <div className="dashboard">
-      {user ? (
-        <>
-          <h1>Salam, {user.name}</h1>
-          <p>Bürcünüz: {user.zodiacSign}</p>
-          <p>Yaşınız: {user.age}</p>
-          <h2>Uyğunlaşmalar</h2>
-          {matches.length > 0 ? (
-            <ul>
-              {matches.map((match) => (
-                <li key={match._id}>
-                  <p>{match.name} - {match.zodiacSign}</p>
-                  <button onClick={() => handleSendMessage(match._id)}>
-                    Mesaj Göndər
-                  </button>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>Uyğunlaşma tapılmadı.</p>
-          )}
-        </>
+      <h1>Bütün İstifadəçilər</h1>
+      {users.length > 0 ? (
+        <ul>
+          {users.map((user) => (
+            <li key={user._id}>
+              <p>
+                {user.name} - {user.email} - {user.zodiacSign} - {user.age} yaş
+              </p>
+              <button onClick={() => handleDeleteUser(user._id)}>Sil</button>
+            </li>
+          ))}
+        </ul>
       ) : (
-        <p>Yüklənir...</p>
+        <p>İstifadəçi tapılmadı.</p>
       )}
     </div>
   );

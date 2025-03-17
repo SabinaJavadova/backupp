@@ -53,4 +53,17 @@ const getAllUserId = async (req,res) => {
   }
 }
 
-module.exports = { getUserMatches,getAllUser,getAllUserId };
+
+const deleteUser = async (req, res) => {
+  const userId = req.params.id; // Silinəcək istifadəçinin ID-si
+  try {
+    const deletedUser = await User.findByIdAndDelete(userId); // İstifadəçini sil
+    if (!deletedUser) {
+      return res.status(404).json({ message: "İstifadəçi tapılmadı!" });
+    }
+    res.status(200).json({ message: "İstifadəçi uğurla silindi!" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+module.exports = { getUserMatches,getAllUser,getAllUserId, deleteUser };
